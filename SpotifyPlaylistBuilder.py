@@ -27,13 +27,12 @@ Methods
 """
 
 def authenticate_spotify():
-    cid = 'd0f6b1e784824144b47580a609fbd77f'
-    secret = '5857e7e2ec084185bb4afad003846a14'
+    #Client ID and Client Secret were environment variables.
+    
     redirect_uri = 'http://127.0.0.1:8080'
-
     scope = 'playlist-modify-public'
 
-    token = SpotifyOAuth(client_id=cid, client_secret=secret, redirect_uri=redirect_uri, scope=scope, username=username)
+    token = SpotifyOAuth(redirect_uri=redirect_uri, scope=scope, username=username)
 
     return spotipy.Spotify(auth_manager = token)
 
