@@ -18,7 +18,19 @@ import tkinter.simpledialog
 import tkinter.font as font
 from tkinter import messagebox
 
-username = 'p2l598a007j3bpwksmdd752fv'
+#For crendential authentication
+from configparser import ConfigParser
+
+
+def getConfig():
+    config_file = "credentials/spotify.ini"
+    config = ConfigParser()
+    config.read(config_file)
+    return config
+    
+config = getConfig()
+
+username = config['spotify']['username']
 
 """
 
@@ -27,12 +39,13 @@ Methods
 """
 
 def authenticate_spotify():
-    #Client ID and Client Secret were environment variables.
-    
-    redirect_uri = 'http://127.0.0.1:8080'
-    scope = 'playlist-modify-public'
+        
+    redirect_uri = config['spotify']['redirect_uri']
+    scope = config['spotify']['scope']
+    client_id = config['spotify']['client_id']
+    client_secret = config['spotify']['client_secret']
 
-    token = SpotifyOAuth(redirect_uri=redirect_uri, scope=scope, username=username)
+    token = SpotifyOAuth(redirect_uri=redirect_uri, scope=scope, username=username, client_id=client_id, client_secret=client_secret)
 
     return spotipy.Spotify(auth_manager = token)
 
