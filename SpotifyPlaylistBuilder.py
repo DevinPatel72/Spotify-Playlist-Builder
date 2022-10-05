@@ -214,8 +214,8 @@ class swipe_window:
         window.title("Spotify Swipe")
         #---------------------------------------------------------------------
 
-        like_image = tk.PhotoImage(file = r"88x70_green_checkmark.png")
-        dislike_image = tk.PhotoImage(file = r"70x70_red_x.png")
+        like_image = tk.PhotoImage(file = r"images/88x70_green_checkmark.png")
+        dislike_image = tk.PhotoImage(file = r"images/70x70_red_x.png")
 
         #Canvas
         canvas = tk.Canvas(window, height=window_height , width=window_width)
@@ -348,7 +348,7 @@ class title_window:
 
 
         #Image Logo
-        spotify_logo = tk.PhotoImage(file = r"spotify_logo.png")
+        spotify_logo = tk.PhotoImage(file = r"images/spotify_logo.png")
         tk.Label(frame, image=spotify_logo, bg='white').pack(pady=20)
 
 

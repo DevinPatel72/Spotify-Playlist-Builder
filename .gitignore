@@ -1,1 +1,4 @@
 credentials/*
+*.spec
+executable/*
+build.py
