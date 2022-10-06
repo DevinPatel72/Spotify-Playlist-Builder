@@ -18,14 +18,31 @@ import tkinter.simpledialog
 import tkinter.font as font
 from tkinter import messagebox
 
+#For pathing
+import os
+import sys
+
 #For crendential authentication
 from configparser import ConfigParser
 
 
+#Useful for building executable
+def getApplicationPath():
+    application_path = ""
+
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+    elif __file__:
+        application_path = os.path.dirname(__file__)
+    
+    return application_path
+
+
 def getConfig():
-    config_file = "credentials/spotify.ini"
+    relative_path = "credentials/spotify.ini"
+    config_path = os.path.join(getApplicationPath(), relative_path)
     config = ConfigParser()
-    config.read(config_file)
+    config.read(config_path)
     return config
     
 config = getConfig()
@@ -45,7 +62,8 @@ def authenticate_spotify():
     client_id = config['spotify']['client_id']
     client_secret = config['spotify']['client_secret']
 
-    token = SpotifyOAuth(redirect_uri=redirect_uri, scope=scope, username=username, client_id=client_id, client_secret=client_secret)
+    token = SpotifyOAuth(redirect_uri=redirect_uri, scope=scope, client_id=client_id, client_secret=client_secret,
+                         cache_handler=spotipy.CacheFileHandler(cache_path=os.path.join(getApplicationPath(), f"credentials/.cache-{username}")))
 
     return spotipy.Spotify(auth_manager = token)
 
@@ -214,8 +232,8 @@ class swipe_window:
         window.title("Spotify Swipe")
         #---------------------------------------------------------------------
 
-        like_image = tk.PhotoImage(file = r"images/88x70_green_checkmark.png")
-        dislike_image = tk.PhotoImage(file = r"images/70x70_red_x.png")
+        like_image = tk.PhotoImage(file = os.path.join(getApplicationPath(), r"images/88x70_green_checkmark.png"))
+        dislike_image = tk.PhotoImage(file = os.path.join(getApplicationPath(), r"images/70x70_red_x.png"))
 
         #Canvas
         canvas = tk.Canvas(window, height=window_height , width=window_width)
@@ -348,7 +366,7 @@ class title_window:
 
 
         #Image Logo
-        spotify_logo = tk.PhotoImage(file = r"images/spotify_logo.png")
+        spotify_logo = tk.PhotoImage(file = os.path.join(getApplicationPath(), r"images/spotify_logo.png"))
         tk.Label(frame, image=spotify_logo, bg='white').pack(pady=20)
 
 
