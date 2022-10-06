@@ -4,4 +4,4 @@ An app that will present a queue of songs to the user and they get to like or di
 
 Run program by running 'SpotifyPlaylistBuilder.py'
 
-Must have VLC media player installed to play audio.
+Must have VLC media player installed to run.
